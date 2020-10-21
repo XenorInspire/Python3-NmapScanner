@@ -7,6 +7,8 @@ Simple network scanner - built with Python3 and Nmap.
 Install nmap module first :
 `pip install python-nmap`
 
+More info : https://pypi.org/project/python-nmap/
+
 ## Installation
 
 In a directory of your choice copy the repo :  
