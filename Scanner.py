@@ -1,4 +1,4 @@
-#!/usr/bin/python3
+#!/usr/bin/env python
 
 import nmap
 scanner = nmap.PortScanner()
@@ -13,7 +13,8 @@ def ipAddr():
 def main():
     print("<= == == == == == == == == === >")
     print("       Python-NmapScanner")
-    print("<= == == == == == == == == === >")
+    print("<= == == == == == == == == === >\n")
+    print("This script requires root privileges")
     resp = 1
 
     while(resp != '0'):
@@ -21,6 +22,7 @@ def main():
         resp = input("\nWhat do you want to do ?\n\n1) SYN ACK Scan\n2) UDP Scan\n3) Comprehensive Scan\n0) Exit\n")
 
         if resp == '1':
+
             ip_addr = ipAddr()
             print("Nmap Version: ", scanner.nmap_version())
             scanner.scan(ip_addr, '1-1024', '-v -sS')
@@ -30,6 +32,7 @@ def main():
             print("Open Ports: ", scanner[ip_addr]['tcp'].keys())
 
         elif resp == '2':
+
             ip_addr = ipAddr()
             print("Nmap Version: ", scanner.nmap_version())
             scanner.scan(ip_addr, '1-1024', '-v -sU')
@@ -39,6 +42,7 @@ def main():
             print("Open Ports: ", scanner[ip_addr]['udp'].keys())
 
         elif resp == '3':
+
             ip_addr = ipAddr()
             print("Nmap Version: ", scanner.nmap_version())
             scanner.scan(ip_addr, '1-1024', '-v -sS -sV -sC -A -O')
