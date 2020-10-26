@@ -5,7 +5,7 @@ Simple network scanner - built with Python3 and Nmap.
 ## Requirements
 
 Install nmap module first :
-`pip install python-nmap`
+`pip3 install python-nmap`
 
 More info : https://pypi.org/project/python-nmap/
 
@@ -20,5 +20,5 @@ Move in the directory :
 Make sure that the script has the right to be executed :  
 `chmod +x Scanner.py`
 
-Execute the script where it was copied :  
+Execute the script in root privileges where it was copied :  
 `python3 Scanner.py`
