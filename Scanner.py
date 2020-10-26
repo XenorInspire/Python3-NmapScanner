@@ -1,7 +1,14 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 
+import collections
 import nmap
 scanner = nmap.PortScanner()
+ScanType = collections.namedtuple("ScanType", "proto args")
+scan_types = {
+    1: ScanType(proto="tcp", args="-v -sS"),
+    2: ScanType(proto="udp", args="-v -sU"),
+    3: ScanType(proto="tcp", args="-v -sS -sV -sC -A -O")
+}
 
 
 def ipAddr():
@@ -15,41 +22,29 @@ def main():
     print("       Python-NmapScanner")
     print("<= == == == == == == == == === >\n")
     print("This script requires root privileges")
-    resp = 1
+    resp = -1
 
-    while(resp != '0'):
+    while(resp != 0):
 
-        resp = input("\nWhat do you want to do ?\n\n1) SYN ACK Scan\n2) UDP Scan\n3) Comprehensive Scan\n0) Exit\n")
+        resp = input(
+            "\nWhat do you want to do ?\n\n1) SYN ACK Scan\n2) UDP Scan\n3) Comprehensive Scan\n0) Exit\n")
 
-        if resp == '1':
+        try:
+            resp = int(resp)
 
-            ip_addr = ipAddr()
-            print("Nmap Version: ", scanner.nmap_version())
-            scanner.scan(ip_addr, '1-1024', '-v -sS')
-            print(scanner.scaninfo())
-            print("Ip Status: ", scanner[ip_addr].state())
-            print(scanner[ip_addr].all_protocols())
-            print("Open Ports: ", scanner[ip_addr]['tcp'].keys())
+        except ValueError:
+            resp = 4
 
-        elif resp == '2':
+        if resp in scan_types:
 
             ip_addr = ipAddr()
-            print("Nmap Version: ", scanner.nmap_version())
-            scanner.scan(ip_addr, '1-1024', '-v -sU')
+            scan_type = scan_types[resp]
+
+            "Nmap Version: ", scanner.nmap_version()
+            scanner.scan(ip_addr, '1-1024', scan_type.args)
             print(scanner.scaninfo())
-            print("Ip Status: ", scanner[ip_addr].state())
-            print(scanner[ip_addr].all_protocols())
-            print("Open Ports: ", scanner[ip_addr]['udp'].keys())
-
-        elif resp == '3':
-
-            ip_addr = ipAddr()
-            print("Nmap Version: ", scanner.nmap_version())
-            scanner.scan(ip_addr, '1-1024', '-v -sS -sV -sC -A -O')
-            print(scanner.scaninfo())
-            print("Ip Status: ", scanner[ip_addr].state())
-            print(scanner[ip_addr].all_protocols())
-            print("Open Ports: ", scanner[ip_addr]['tcp'].keys())
-
+            print("IP Status: ", scanner[ip_addr].state())
+            print("Protocols: ", ", ".join(scanner[ip_addr].all_protocols()))
+            print("Open Ports: ", ", ".join(str(p) for p in scanner[ip_addr][scan_type.proto].keys()))
 
 main()
