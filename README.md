@@ -12,7 +12,7 @@ More info : https://pypi.org/project/python-nmap/
 ## Installation
 
 In a directory of your choice copy the repo :  
-`git clone https://github.com/XenorInspire/Python3-NmapScanner`  
+`git clone https://github.com/XenorInspire/Python3-NmapScanner.git`  
 
 Move in the directory :  
 `cd Python3-NmapScanner`
